@@ -89,7 +89,9 @@ class AdminPostsController extends Controller
      */
     public function edit($id)
     {
-      //  return view('admin.posts.edit');
+        $post = Post::findOrFail($id);
+        $categories = Category::lists('name','id')->all();
+        return view('admin.posts.edit',compact('post','categories'));
     }
 
     /**
@@ -101,7 +103,20 @@ class AdminPostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = $request->all();
+
+        if($file = $request->file('photo_id')){
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images', $name);
+            $photo = Photo::create(['file'=>$name]);
+            $input['photo_id'] = $photo->id;
+        }
+        // 1st we're gonna find the user(the user which is logged_in),and then we wanna find the users posts,and then we wanna
+        // find out where the ID is same,and when we find out we wanna pull the 1st one out,bcz there is only 1 that we're 
+        // editing at a time.And then after we do that,i want you to update it.And what we're gonna update ,we gonna update
+        // the input
+        Auth::user()->posts()->whereId($id)->first()->update($input);
+        return redirect('admin/posts');
     }
 
     /**
@@ -112,6 +127,11 @@ class AdminPostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // in that below line,we deleted the post before ,then we can't find the relationship bcz posts already deleted
+        // $post = Post::findOrFail($id)->delete();
+        $post = Post::findOrFail($id);
+        unlink(public_path() . $post->photo->file);
+        $post->delete();
+        return redirect('admin/posts');
     }
 }
