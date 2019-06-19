@@ -27,4 +27,6 @@ Route::group(['middleware' => 'admin'], function () {
     Route::resource('admin/users', 'AdminUsersController');
     Route::resource('admin/posts', 'AdminPostsController'); // and the posts are going to be available for the admin
     Route::resource('admin/categories', 'AdminCategoriesController');
+    Route::resource('admin/media', 'AdminMediasController');
+   // Route::get('admin/media/upload', ['as'=>'admin.media.upload','uses'=>'AdminMediasController@store']);
 });
