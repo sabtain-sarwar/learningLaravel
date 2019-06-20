@@ -22,7 +22,7 @@ class CreatePostsTable extends Migration
             $table->timestamps();
 
             // we're gonna use the object(table) here.We're gonna use a method foreign and the foreign key is going to be user_id
-            // bcz we're going to relate.We're gonna put the contraint b/w the users table and the post.After that we  are gonna
+            // bcz we're going to relate.We're gonna put the constraint b/w the users table and the post.After that we  are gonna
             // do references the ID.Now you see these 2 constraints(user_id and the id).user_id from the post to the id on the
             // users table.We refrence the id on users.And then we're gonna say is onDelete(we're going to cascade down and 
             // delete everything)
