@@ -2,10 +2,20 @@
 
 namespace App;
 
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Post extends Model implements SluggableInterface
 {
+    use SluggableTrait; // Basically we're using that trait here,basically that above class
+    // Basically it's saying i want you to grab the title every time you save it and save it to the slug column
+    protected $sluggable = [
+        'build_from' => 'title',
+        'save_to'    => 'slug',
+        'on_update'  => 'true'
+    ];
+
     protected $fillable = [
         'category_id',
         'photo_id',
