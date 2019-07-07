@@ -60,9 +60,10 @@ Route::group(['middleware' => 'admin'], function () {
         'show'=>'admin.comments.show'
    ]]);
    Route::resource('admin/comment/replies', 'CommentRepliesController',['names'=>[
-        'index'=>'admin.replies.index',
-        'create'=>'admin.replies.create',
-        'store'=>'admin.replies.store',
-        'edit'=>'admin.replies.edit'
+        'index'=>'admin.comment.replies.index',
+        'create'=>'admin.comment.replies.create',
+        'store'=>'admin.comment.replies.store',
+        'edit'=>'admin.comment.replies.edit',
+        'show'=>'admin.comment.replies.show'
    ]]);
 });
