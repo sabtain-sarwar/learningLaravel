@@ -22,7 +22,7 @@ class AdminMediasController extends Controller
 
         // from the form(that are in admin.media.create) automatically we're gonna get a POST SuperGlobal called $_FILES with a 
         // key of file
-        // So,we're gonna get our requests and it's gonna be type of file request and it;s gonna be named file by default
+        // So,we're gonna get our requests and it's gonna be type of file request and it's gonna be named file by default
         $file = $request->file('file');
         $name = time() . $file->getClientOriginalName();
         $file->move('images',$name);
@@ -31,8 +31,31 @@ class AdminMediasController extends Controller
 
     public function destroy($id) {
        $photo =  Photo::findOrFail($id);
-       unlink(\public_path() . $photo->file);
+       unlink(public_path() . $photo->file);
        $photo->delete();
-       return redirect('admin/media');
+       //return redirect('admin/media');
+    }
+
+    // we wanna delete whatever id we are getting in the request
+    public function deleteMedia(Request $request) {
+//         if delete_single is available then we wanna do something
+//        if(isset($request->delete_single)){
+//            //return dd($request);
+//            // here we are getting the photo id in the parameter
+////            $this->destroy($request->photo);
+////            return redirect()->back();
+//        }
+//        return redirect()->back();
+        if(isset($request->delete_all) && !empty($request->checkBoxArray)) {
+            $photos = Photo::findOrFail($request->checkBoxArray);
+            foreach ($photos as $photo) {
+                $photo->delete();
+            }
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
+        //return "it works";
+        //dd($request);
     }
 }
