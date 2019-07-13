@@ -1,11 +1,10 @@
-@extends('layouts.blog-post')
-
+@extends('layouts.blog-home')
 
 @section('content')
-
-
+    <div class="container">
+<div class="row">
+    <div class="col-md-8">
 <!-- Blog Post -->
-
     <!-- Title -->
     <h1>{{{$post->title}}}</h1>
 
@@ -13,28 +12,20 @@
     <p class="lead">
     by <a href="#">{{$post->user->name}}</a>
     </p>
-
     <hr>
-
     <!-- Date/Time -->
     <p><span class="glyphicon glyphicon-time"></span> Posted {{$post->created_at->diffForHumans()}}</p>
-
     <hr>
-
     <!-- Preview Image -->
     <img class="img-responsive" src="{{$post->photo ? $post->photo->file : $post->photoPlaceholder()}}" alt="">
-
     <hr>
-
     <!-- Post Content -->
 {{--    <p class="lead">{{$post->body}}</p>--}}
 <p class="lead">{!! $post->body !!}</p>
-
     <hr>
-
-    @if(Session::has('comment_message'))
-        {{session('comment_message')}}
-    @endif
+{{--    @if(Session::has('comment_message'))--}}
+{{--        {{session('comment_message')}}--}}
+{{--    @endif--}}
 
     @if(Session::has('reply_message'))
         {{session('reply_message')}}
@@ -43,8 +34,8 @@
     <!-- Blog Comments -->
 
         {{-- if the user is logged in then we see the comment form --}}
-        @if(Auth::user())
-
+{{--        @if(Auth::user())--}}
+           @if(Auth::check())
             <!-- Comments Form -->
             <div class="well">
                 <h4>Leave a Comment:</h4>
@@ -122,6 +113,9 @@
                     </div>
                 @endforeach
             @endif
+</div> <!-- col-md-8 -->
+    @include('includes/front_sidebar')
+    </div> <!-- row -->
 @stop
 
 @section('scripts')

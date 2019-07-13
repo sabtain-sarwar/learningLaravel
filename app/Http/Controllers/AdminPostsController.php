@@ -136,11 +136,5 @@ class AdminPostsController extends Controller
         return redirect('admin/posts');
     }
 
-    // public function post($id) {
-    //     $post = Post::findOrFail($id);
-    public function post($slug) {
-        $post = Post::findBySlugOrFail($slug);
-        $comments = $post->comments()->whereIsActive(1)->get();
-        return view('post',compact('post','comments'));
-    }
+
 }
